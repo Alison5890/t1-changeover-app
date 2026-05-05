@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
 import { DashboardScreen } from './screens/DashboardScreen';
 import { KittingScreen } from './screens/KittingScreen';
@@ -49,7 +49,7 @@ export default function App() {
   }, [isSeeded, workstations.length]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="min-h-screen bg-gray-50 pb-16">
         <Routes>
           <Route path="/" element={<DashboardScreen />} />
@@ -61,6 +61,6 @@ export default function App() {
         </Routes>
         <NavBar />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
