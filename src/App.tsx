@@ -7,12 +7,15 @@ import { OBSheetScreen } from './screens/OBSheetScreen';
 import { WIPScreen } from './screens/WIPScreen';
 import { TaskScreen } from './screens/TaskScreen';
 import { ConfigScreen } from './screens/ConfigScreen';
+import { DataScreen } from './screens/DataScreen';
+import { ReportScreen } from './screens/ReportScreen';
 import { useConfigStore } from './store/useConfigStore';
 import { useChangeoverStore } from './store/useChangeoverStore';
 import { useKittingStore } from './store/useKittingStore';
 import { useOBSheetStore } from './store/useOBSheetStore';
 import { useWIPStore } from './store/useWIPStore';
 import { useTaskStore } from './store/useTaskStore';
+import { useHistoricalStore } from './store/useHistoricalStore';
 import {
   generateKittingItems, generateOBEntries,
   generateWIPEntries, generateTasks, createSeedChangeover
@@ -25,10 +28,15 @@ export default function App() {
   const { setEntries: setOB } = useOBSheetStore();
   const { setEntries: setWIP } = useWIPStore();
   const { setTasks } = useTaskStore();
+  const { seedHistorical, isSeeded: histSeeded } = useHistoricalStore();
 
   useEffect(() => {
     if (!isSeeded) loadSeedConfig();
   }, [isSeeded, loadSeedConfig]);
+
+  useEffect(() => {
+    if (!histSeeded) seedHistorical();
+  }, [histSeeded, seedHistorical]);
 
   useEffect(() => {
     if (!isSeeded || workstations.length === 0) return;
@@ -57,6 +65,8 @@ export default function App() {
           <Route path="/ob-sheet" element={<OBSheetScreen />} />
           <Route path="/wip" element={<WIPScreen />} />
           <Route path="/tasks" element={<TaskScreen />} />
+          <Route path="/report" element={<ReportScreen />} />
+          <Route path="/data" element={<DataScreen />} />
           <Route path="/config" element={<ConfigScreen />} />
         </Routes>
         <NavBar />
